@@ -22,6 +22,14 @@ function App() {
         const email     = emailRef?.current?.value ?? '';
         const mobile    = mobRef?.current?.value ?? '';
         const skills    = skillRef?.current?.value ?? '';
+        if(!firstName || !lastName || !email || !mobile || !skills){
+            alert("Please fill all the fields");
+            return;
+        }
+        if (mobile.length !== 10 || isNaN(mobile)) {
+            alert("Please enter a valid 10-digit phone number");
+            return;
+        }
         let dataObj = {
             firstName,
             lastName,

@@ -1,12 +1,24 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { saveAs } from 'file-saver';
 
 export default function Excel({ data = [] }) {
   const navigate = useNavigate();
   const handleAdd = () => {
     navigate('/');
+  }
+  const handleExportToPdf = () =>{
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "A4"
+    });
+    doc.setFontSize(18);
+    autoTable(doc, { html: "#detail-table"});
+    doc.save("detail.pdf");
   }
   const handleExportToExcel = () =>{
     const table = document.getElementById('detail-table');
@@ -21,6 +33,12 @@ export default function Excel({ data = [] }) {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800">Data Details</h1>
           <div className='gap-4 flex'>
+            <button 
+            className='px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200'
+            onClick={handleExportToPdf}
+          >
+            Export to PDF
+          </button>
           <button 
             className='px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200'
             onClick={handleExportToExcel}

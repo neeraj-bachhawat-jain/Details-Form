@@ -30,7 +30,7 @@ return (
 
             <div className='mb-6'>
                 <label htmlFor='skill' className='block text-sm font-medium text-gray-700 mb-1'>Skills:</label>
-                <input type='text' id='skill' name='skill' placeholder='Enter your skills' ref={skillRef} className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'></input>
+                <input type='text' id='skill' name='skill' placeholder='Enter your skills using comma-separated(,)' ref={skillRef} className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'></input>
             </div>
 
             <button type='submit' className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200'>Submit</button>
