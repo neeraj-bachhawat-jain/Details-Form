@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Form from './Pages/Form.jsx'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import Excel from './Pages/Excel.jsx'
+import { ToastContainer, toast } from 'react-toastify'
 
 function App() {
     const [data, setData] = useState([]);
@@ -23,11 +24,11 @@ function App() {
         const mobile    = mobRef?.current?.value ?? '';
         const skills    = skillRef?.current?.value ?? '';
         if(!firstName || !lastName || !email || !mobile || !skills){
-            alert("Please fill all the fields");
+            toast.error("Please fill all the fields");
             return;
         }
         if (mobile.length !== 10 || isNaN(mobile)) {
-            alert("Please enter a valid 10-digit phone number");
+            toast.error("Please enter a valid 10-digit phone number");
             return;
         }
         let dataObj = {
@@ -52,14 +53,14 @@ function App() {
 
         navigate('/excel');
     }
-
-
   return (
-    <Routes>
-      <Route path="/" element={<Form handleSubmit = {handleSubmit} firstNameRef={firstNameRef} lastNameRef={lastNameRef} emailRef={emailRef} mobRef={mobRef} skillRef={skillRef} />} />
-      <Route path='/excel' element={<Excel data={data} />} />
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Form handleSubmit = {handleSubmit} firstNameRef={firstNameRef} lastNameRef={lastNameRef} emailRef={emailRef} mobRef={mobRef} skillRef={skillRef} />} />
+        <Route path='/excel' element={<Excel data={data} setData={setData} />} />
+      </Routes>
+    </>
   )
 }
-
-export default App
+export default App;

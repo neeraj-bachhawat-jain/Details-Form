@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { saveAs } from 'file-saver';
 
-export default function Excel({ data = [] }) {
+export default function Excel({ data = [], setData }) {
   const navigate = useNavigate();
   const handleAdd = () => {
     navigate('/');
@@ -26,6 +26,10 @@ export default function Excel({ data = [] }) {
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     const file = new Blob([excelBuffer], { type: "application/octet-stream"});
     saveAs(file, "details.xlsx");
+  }
+  const handleDelete = (index) => {
+    const filteredData = data.filter((_, i) => i !== index);
+    setData(filteredData);
   }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
@@ -64,6 +68,7 @@ export default function Excel({ data = [] }) {
                   <th className="px-8 py-4 text-left font-semibold">Email</th>
                   <th className="px-8 py-4 text-left font-semibold">Phone</th>
                   <th className="px-8 py-4 text-left font-semibold">Skills</th>
+                  <th className="px-8 py-4 text-left font-semibold"></th>
                 </tr>
               </thead>
               <tbody>
@@ -78,6 +83,11 @@ export default function Excel({ data = [] }) {
                         <div className='flex flex-wrap gap-2'>
                           {item.skills.map((item, index)=>(<span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">{item}</span>))
                           }</div>
+                      </td>
+                      <td className="px-8 py-4">
+                        <button onClick={() => handleDelete(index)} className="text-red-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer duration-150">
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))
